@@ -50,6 +50,7 @@ function getClanInfo(cb) {
         // do whatever we want with the response once it's done
         res.on('end', function () {
             try {
+                console.log(body);
                 var parsed = JSON.parse(body);
             } catch (err) {
                 console.error('Unable to parse response as JSON', err);
