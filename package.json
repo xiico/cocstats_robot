@@ -1,0 +1,7 @@
+{
+  "name": "robot",
+  "main": "server.js",
+  "dependencies": {
+    "mongoose": "~3.8.1"
+  }
+}
