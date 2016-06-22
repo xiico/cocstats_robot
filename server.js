@@ -50,6 +50,7 @@ setInterval(function () { getClanInfo(saveDataToDataBase) }, 60000);//21600000
 
 
 function getClanInfo(cb) {
+    console.log('start finding... ' + (new Date()));
     Clan.find({}, function (err, clans) {
         if (err)
             throw err;
