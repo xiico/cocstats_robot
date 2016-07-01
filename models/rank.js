@@ -12,6 +12,9 @@ var rankSchema = mongoose.Schema({
             items: [{
                 tag: String,
                 name: String,
+                badgeUrls: {
+                    small: String
+                },
                 location: {
                     id: Number,
                     name: String,
@@ -22,7 +25,9 @@ var rankSchema = mongoose.Schema({
                 warWinStreak: Number,
                 clanPoints: Number,
                 trophies: Number,
-                members: Number
+                members: Number,
+                rank: 200,
+                previousRank: 206
             }]
         }]
 });
