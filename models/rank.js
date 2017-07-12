@@ -26,8 +26,8 @@ var rankSchema = mongoose.Schema({
                 clanPoints: Number,
                 trophies: Number,
                 members: Number,
-                rank: 200,
-                previousRank: 206
+                rank: Number,
+                previousRank: Number
             }]
         }]
 });
