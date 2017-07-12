@@ -13,9 +13,9 @@ var Rank = require('../models/rank');
 mongoose.connect(configDB.url); // connect to our database
 
 function saveClan(error, obj) {
-    if(error) {
-        return;
-    }
+    // if(error) {
+    //     return;
+    // }
     Clan.findOneAndUpdate({ tag: obj.tag }, obj, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, clan) {
         if (err)
             throw err;
@@ -49,9 +49,9 @@ function saveClan(error, obj) {
 }
 
 function saveRank(error, response, rnk) {
-    if(error) {
-        return;
-    }
+    // if(error) {
+    //     return;
+    // }
     Rank.findOneAndUpdate({ type: rnk.type }, rnk, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, rank) {
         if (err)
             throw err;
