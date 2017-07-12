@@ -7,7 +7,7 @@ module.exports = {
         else if (type == "global")
             path = '/v1/clans?minClanPoints=' + options;
         else
-            path = '/v1/locations/' + options +'/rankings/clans';
+            path = '/v1/locations/' + options +'/rankings/clans?limit=40';
 
         https.get({
             host: 'api.clashofclans.com',
