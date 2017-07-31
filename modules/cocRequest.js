@@ -1,11 +1,14 @@
 var https = require('https');
+var mock = require('../modules/mock');
 
 module.exports = {
     searchClans: function (type, options, callBack, rank) {
         if (type == "clan")
             path = '/v1/clans/%23' + options.replace("#", "");
         else if (type == "global")
-            path = '/v1/clans?minClanPoints=' + options;
+            path = '/v1/clans?minClanPoints=' + options + '&limit=200';
+        else if (type == "player")
+            path = '/v1/players/%23' + options.replace("#", "");
         else
             path = '/v1/locations/' + options +'/rankings/clans?limit=40';
 
@@ -34,8 +37,26 @@ module.exports = {
 
                 if (parsed.tag || parsed.items)
                     callBack(null, parsed, rank);
-                else
+                else {
                     console.log(body);
+                    if (parsed.reason == "accessDenied.invalidIp") {
+                        switch (type) {
+                            case "global":
+                                parsed = mock.clans;
+                                break;
+                            case "clan":
+                                parsed = mock.clan;
+                                break;
+                            case "player":
+                                parsed = mock.player;
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                    }
+                    callBack(null, parsed, rank);
+                }
             });
         }).on('error', function (err) {
             // handle errors with the request itself

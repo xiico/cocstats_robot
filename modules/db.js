@@ -4,7 +4,8 @@ var configDB = require('../config/database.js');
 
 //models
 var Clan = require('../models/clan');
-var Member = require('../models/member');
+var Player = require('../models/player');
+var playerHistory = require('../models/playerHistory');
 var clanHistory = require('../models/clanHistory');
 var cocRequest = require('../modules/cocRequest');
 var Rank = require('../models/rank');
@@ -44,7 +45,66 @@ function saveClan(error, obj) {
                     });
                     ch.save(function (error) {
                         if (error){
-                            console.log(error);
+                            console.log(timeStamp() + error);
+                            return;
+                        }
+                    });
+                }
+            })
+        }
+    });
+}
+
+function savePlayer(error, obj) {
+    // if(error) {
+    //     return;
+    // }
+    Player.findOneAndUpdate({ tag: obj.tag }, {tag: obj.tag, name: obj.name}, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, player) {
+        if (err){
+            console.log(timeStamp() + err);
+            return;
+        }
+        if (player) {
+            var insert = {
+                tag: obj.tag
+            };
+            playerHistory.findOneAndUpdate({ tag: insert.tag }, insert, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, ph) {
+                if (err){
+                    console.log(timeStamp() + err);
+                    return;
+                }
+                if (ph) {
+                    if (!ph.history)
+                        ph.history = [];
+                    ph.history.push({
+                        "townHallLevel": obj.townHallLevel,
+                        "expLevel": obj.expLevel,
+                        "bestTrophies": obj.bestTrophies,
+                        "warStars": obj.warStars,
+                        "attackWins": obj.attackWins,
+                        "defenseWins": obj.defenseWins,
+                        "builderHallLevel": obj.builderHallLevel,
+                        "versusTrophies": obj.versusTrophies,
+                        "bestVersusTrophies": obj.bestVersusTrophies,
+                        "versusBattleWins": obj.versusBattleWins,
+                        "role": obj.role,
+                        "clan": obj.clan ? {
+                            "tag": obj.clan.tag,
+                            "name": obj.clan.name
+                        } : null,
+                        "legendStatistics": obj.legendStatistics ? {
+                            "legendTrophies": obj.legendStatistics.legendTrophies,
+                            "currentSeason": {
+                                "rank": obj.legendStatistics.currentSeason ? obj.legendStatistics.currentSeason.rank : null,
+                                "trophies": obj.legendStatistics.currentSeason ? obj.legendStatistics.currentSeason.trophies : null
+                            }
+                        } : null,
+                        "versusBattleWinCount": obj.versusBattleWinCount,
+                        "date": new Date()
+                    });
+                    ph.save(function (error) {
+                        if (error){
+                            console.log(timeStamp() + error);
                             return;
                         }
                     });
@@ -60,7 +120,7 @@ function saveRank(error, response, rnk) {
     // }
     Rank.findOneAndUpdate({ type: rnk.type }, rnk, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, rank) {
         if (err){
-            console.log(err);
+            console.log(timeStamp() +err);
             return;
         }
         if (rank.entries.length > 0 && (new Date(rank.entries[rank.entries.length - 1].date)).getDate() != new Date().getDate()) {
@@ -78,11 +138,14 @@ function saveRank(error, response, rnk) {
 
         rank.save(function (error) {
             if (error){
-                console.log(error);
+                console.log(timeStamp() + error);
                 return;
             }
         });
     });
+}
+function timeStamp() {
+    return "[" + new Date().toISOString() + "]";
 }
 
 module.exports =
@@ -93,14 +156,29 @@ module.exports =
                     console.log(err);
                     return;
                 }
-                console.log("[" + new Date().toISOString() + "] updating " + clans.length + " clans...");
+                console.log(timeStamp() + " updating " + clans.length + " clans...");
                 for (var index = 0, clan; clan = clans[index]; index++) {
                     cocRequest.searchClans('clan', clan.tag, saveClan);
                 }
             });
         },
         globalRankUpdate: function () {
-            console.log("[" + new Date().toISOString() + "] globalRankUpdates");
-            cocRequest.searchClans('global', 55000, saveRank, { type: "global", date: new Date() });
+            console.log(timeStamp() + " globalRankUpdates");
+            cocRequest.searchClans('global', 50000, saveRank, { type: "global", date: new Date() });
+        },
+        playerUpdate: function () {
+            Player.find({}, function (err, players) {
+                if (err){
+                    console.log(err);
+                    return;
+                }
+                console.log(timeStamp() + " updating " + players.length + " players...");
+                for (var index = 0, player; player = players[index]; index++) {
+                    cocRequest.searchClans('player', player.tag, savePlayer);
+                }
+            });
+        },
+        timeStamp: function() {
+            return timeStamp();
         }
     }
