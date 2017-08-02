@@ -10,7 +10,7 @@ module.exports = {
         else if (type == "player")
             path = '/v1/players/%23' + options.replace("#", "");
         else
-            path = '/v1/locations/' + options +'/rankings/clans?limit=40';
+            path = '/v1/locations/' + options +'/rankings/clans?limit=50';
 
         https.get({
             host: 'api.clashofclans.com',
@@ -42,6 +42,7 @@ module.exports = {
                     if (parsed.reason == "accessDenied.invalidIp") {
                         switch (type) {
                             case "global":
+                            case "country":
                                 parsed = mock.clans;
                                 break;
                             case "clan":

@@ -3,9 +3,10 @@ var mongoose = require('mongoose');
 //var bcrypt = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var rankSchema = mongoose.Schema({
+var RankSchema = mongoose.Schema({
     date: Date,
     type: String,
+    location: Number,
     entries: [
         {
             date: Date,
@@ -33,4 +34,4 @@ var rankSchema = mongoose.Schema({
 });
 
 // create the model for rankEntry and expose it to our app
-module.exports = mongoose.model('rank', rankSchema);
+module.exports = mongoose.model('Rank', RankSchema);

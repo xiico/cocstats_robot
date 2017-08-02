@@ -144,6 +144,36 @@ function saveRank(error, response, rnk) {
         });
     });
 }
+
+function saveCountryRank(error, response, rnk) {
+    Rank.findOneAndUpdate({ location: rnk.location }, rnk, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, rank) {
+        if (err){
+            console.log(timeStamp() +err);
+            return;
+        }
+
+        if(!rank.entries) rank.entries = [];
+
+        while (rank.entries.length > 24) {
+            rank.entries[rank.entries.length - 1].shift();
+        }
+
+        var rankEntry = {
+            date: new Date(),
+            items: response.items
+        }
+
+        rank.entries.push(rankEntry);
+
+        rank.save(function (error) {
+            if (error) {
+                console.log(timeStamp() + error);
+                return;
+            }
+        });
+    });
+}
+
 function timeStamp() {
     return "[" + new Date().toISOString() + "]";
 }
@@ -165,6 +195,20 @@ module.exports =
         globalRankUpdate: function () {
             console.log(timeStamp() + " globalRankUpdates");
             cocRequest.searchClans('global', 50000, saveRank, { type: "global", date: new Date() });
+        },
+        countryRankUpdate: function () {
+            console.log(timeStamp() + " countryRankUpdate");
+            //db.ranks.find({type:{$not:{$eq:"global"}}},{type:1})
+            Rank.find({type:{$not:{$eq:"global"}}}, { type: 1, location: 1 }, function (err, ranks) {
+                if (err){
+                    console.log(err);
+                    return;
+                }
+                console.log(timeStamp() + " updating " + ranks.length + " ranks...");
+                for (var index = 0, rank; rank = ranks[index]; index++) {
+                    cocRequest.searchClans('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location });
+                }                
+            });
         },
         playerUpdate: function () {
             Player.find({}, function (err, players) {
