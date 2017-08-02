@@ -3,19 +3,20 @@ console.log(db.timeStamp() + " service starting...");
 var counter = 0;
 
 db.globalRankUpdate();
-/*db.clanUpdate();
-db.playerUpdate();*/
-
+db.clanUpdate();
+db.playerUpdate();
 db.countryRankUpdate();
 
-/*setInterval(function () { 
+setInterval(function () { 
     //every hour
     db.globalRankUpdate() 
     //every 6 hours
     if(counter % 6 == 0) db.clanUpdate();
     //every 24 hours
     if(counter % 24 == 0) db.playerUpdate();
+    //every 24 hours
+    if(counter % 24 == 0) db.countryRankUpdate();
     counter++;
-}, 1000*60*60);*/
+}, 1000*60*60);
 
 console.log(db.timeStamp() + " service started...");
