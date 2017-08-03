@@ -2,6 +2,7 @@
   "name": "robot",
   "main": "server.js",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "mongoose": "~3.8.1"
   }
 }

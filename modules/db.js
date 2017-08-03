@@ -77,6 +77,7 @@ function savePlayer(error, obj) {
                     if (!ph.history)
                         ph.history = [];
                     ph.history.push({
+                        "trophies": obj.trophies,
                         "townHallLevel": obj.townHallLevel,
                         "expLevel": obj.expLevel,
                         "bestTrophies": obj.bestTrophies,

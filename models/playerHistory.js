@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 var playerHistorySchema = mongoose.Schema({
     tag: String,
     history: [{
+        "trophies": Number,
         "townHallLevel": Number,
         "expLevel": Number,
         "bestTrophies": Number,

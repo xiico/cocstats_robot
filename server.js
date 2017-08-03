@@ -1,3 +1,4 @@
+require('dotenv').config();
 var db = require('./modules/db');
 console.log(db.timeStamp() + " service starting...");
 var counter = 0;
