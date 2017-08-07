@@ -6,7 +6,7 @@ module.exports = {
         if (type == "clan")
             path = '/v1/clans/%23' + options.replace("#", "");
         else if (type == "global")
-            path = '/v1/clans?minClanPoints=' + options + '&limit=200';
+            path = '/v1/clans?minClanPoints=' + options;
         else if (type == "player")
             path = '/v1/players/%23' + options.replace("#", "");
         else

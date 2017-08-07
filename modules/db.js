@@ -195,7 +195,7 @@ module.exports =
         },
         globalRankUpdate: function () {
             console.log(timeStamp() + " globalRankUpdates");
-            cocRequest.searchClans('global', 50000, saveRank, { type: "global", date: new Date() });
+            cocRequest.searchClans('global', 54000, saveRank, { type: "global", date: new Date() });
         },
         countryRankUpdate: function () {
             console.log(timeStamp() + " countryRankUpdate");
