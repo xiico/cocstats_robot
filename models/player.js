@@ -11,7 +11,10 @@ var playerSchema = mongoose.Schema({
     "clan": {
       "tag": String,
       "name": String
-    }
+    },
+    expLevel: Number,
+    attackWins: Number,
+    defenseWins: Number
 });
 
 // create the model for users and expose it to our app
