@@ -5,7 +5,13 @@ var mongoose = require('mongoose');
 // define the schema for our user model
 var playerSchema = mongoose.Schema({
     tag: String,
-    name: String
+    name: String,
+    trophies: Number,
+    date: Date,
+    "clan": {
+      "tag": String,
+      "name": String
+    }
 });
 
 // create the model for users and expose it to our app

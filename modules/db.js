@@ -68,6 +68,13 @@ function savePlayer(error, obj) {
             var insert = {
                 tag: obj.tag
             };
+            player.date = new Date();
+            player.trophies = obj.trophies;
+            player.clan = obj.clan;
+            player.expLevel = obj.expLevel;
+            player.trophies = obj.trophies;
+            player.attackWins = obj.attackWins;
+            player.defenseWins = obj.defenseWins;
             playerHistory.findOneAndUpdate({ tag: insert.tag }, insert, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, ph) {
                 if (err){
                     console.log(timeStamp() + err);
