@@ -9,8 +9,14 @@ var playerSchema = mongoose.Schema({
     trophies: Number,
     date: Date,
     "clan": {
-      "tag": String,
-      "name": String
+        "tag": String,
+        "name": String,
+        "clanLevel": Number,
+        "badgeUrls": {
+            "small": String,
+            "large": String,
+            "medium": String
+        }
     },
     expLevel: Number,
     attackWins: Number,
