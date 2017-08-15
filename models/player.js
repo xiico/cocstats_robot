@@ -18,6 +18,13 @@ var playerSchema = mongoose.Schema({
             "medium": String
         }
     },
+    "league": {
+      "id": Number,
+      "name": String,
+      "iconUrls": {
+        "tiny": String,
+      }
+    },
     expLevel: Number,
     attackWins: Number,
     defenseWins: Number
