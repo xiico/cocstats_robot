@@ -176,7 +176,7 @@ function saveCountryRank(error, response, rnk) {
 
         if(!rank.entries) rank.entries = [];
 
-        while (rank.entries.length > 24) {
+        while (rank.entries.length > 37) {
             rank.entries.shift();
         }
 
