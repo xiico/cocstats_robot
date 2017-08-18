@@ -210,6 +210,10 @@ module.exports =
                 }
                 console.log(timeStamp() + " updating " + clans.length + " clans...");
                 for (var index = 0, clan; clan = clans[index]; index++) {
+                    if (!clan.tag){
+                        if(clan.remove) clan.remove();
+                        continue;
+                    }
                     cocRequest.searchClans('clan', clan.tag, saveClan);
                 }
             });
