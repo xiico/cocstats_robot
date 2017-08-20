@@ -17,6 +17,11 @@ function saveClan(error, obj) {
     // if(error) {
     //     return;
     // }
+    if( error || !obj.tag){
+        console.log(timeStamp() + error, 'obj: ' + JSON.stringify(obj));
+        return;
+    }
+
     Clan.findOneAndUpdate({ tag: obj.tag }, obj, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, clan) {
         if (err){
             console.log(err);
