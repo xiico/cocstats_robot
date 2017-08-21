@@ -20,6 +20,18 @@ Object.defineProperty(global, '__stack', {
     }
   });
 
+  Object.defineProperty(global, '__func', {
+    get: function(){
+      return __stack[1].getFunctionName();
+    }
+  });
+
+
+  Object.defineProperty(global, '__file', {
+    get: function(){
+      return __stack[1].getFileName();
+    }
+  });
 //models
 var Clan = require('../models/clan');
 var Player = require('../models/player');
@@ -31,18 +43,22 @@ var Rank = require('../models/rank');
 // configuration ===============================================================
 mongoose.connect(configDB.url); // connect to our database
 
+// function debug(){
+// console.log('at',__func,__file+':'+__line);
+// }
+// debug()
 function saveClan(error, obj) {
     // if(error) {
     //     return;
     // }
     if( error || !obj.tag){
-        console.log(timeStamp(), '(modules/db.js:'+ __line +')', error, 'obj: ' + JSON.stringify(obj));
+        console.log(timeStamp(), 'at',__func,__file+':'+__line, error, 'obj: ' + JSON.stringify(obj));
         return;
     }
 
     Clan.findOneAndUpdate({ tag: obj.tag }, obj, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, clan) {
         if (err){
-            console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+            console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
             return;
         }
         if (clan) {
@@ -51,7 +67,7 @@ function saveClan(error, obj) {
             };
             clanHistory.findOneAndUpdate({ tag: insert.tag }, insert, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, ch) {
                 if (err){
-                    console.log(timeStamp(), '(modules/db.js:'+ __line +')',  err);
+                    console.log(timeStamp(), 'at',__func,__file+':'+__line,  err);
                     return;
                 }
                 if (ch) {
@@ -68,7 +84,7 @@ function saveClan(error, obj) {
                     });
                     ch.save(function (error) {
                         if (error){
-                            console.log(timeStamp(), '(modules/db.js:'+ __line +')', error);
+                            console.log(timeStamp(), 'at',__func,__file+':'+__line, error);
                             return;
                         }
                     });
@@ -84,7 +100,7 @@ function savePlayer(error, obj) {
     // }
     Player.findOneAndUpdate({ tag: obj.tag }, {tag: obj.tag, name: obj.name}, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, player) {
         if (err){
-            console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+            console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
             return;
         }
         if (player) {
@@ -108,13 +124,13 @@ function savePlayer(error, obj) {
             }
             player.save(function (error) {
                 if (error){
-                    console.log(timeStamp(), '(modules/db.js:'+ __line +')', error);
+                    console.log(timeStamp(), 'at',__func,__file+':'+__line, error);
                     return;
                 }
             });
             playerHistory.findOneAndUpdate({ tag: insert.tag }, insert, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, ph) {
                 if (err){
-                    console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+                    console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
                     return;
                 }
                 if (ph) {
@@ -149,7 +165,7 @@ function savePlayer(error, obj) {
                     });
                     ph.save(function (error) {
                         if (error){
-                            console.log(timeStamp(), '(modules/db.js:'+ __line +')', error);
+                            console.log(timeStamp(), 'at',__func,__file+':'+__line, error);
                             return;
                         }
                     });
@@ -165,7 +181,7 @@ function saveRank(error, response, rnk) {
     // }
     Rank.findOneAndUpdate({ type: rnk.type }, rnk, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, rank) {
         if (err){
-            console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+            console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
             return;
         }
         if (rank.entries.length > 0 && (new Date(rank.entries[rank.entries.length - 1].date)).getDate() != new Date().getDate()) {
@@ -183,7 +199,7 @@ function saveRank(error, response, rnk) {
 
         rank.save(function (error) {
             if (error){
-                console.log(timeStamp(), '(modules/db.js:'+ __line +')', error);
+                console.log(timeStamp(), 'at',__func,__file+':'+__line, error);
                 return;
             }
         });
@@ -193,7 +209,7 @@ function saveRank(error, response, rnk) {
 function saveCountryRank(error, response, rnk) {
     Rank.findOneAndUpdate({ location: rnk.location }, rnk, { upsert: true, new: true, setDefaultsOnInsert: true }, function (err, rank) {
         if (err){
-            console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+            console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
             return;
         }
 
@@ -212,7 +228,7 @@ function saveCountryRank(error, response, rnk) {
 
         rank.save(function (error) {
             if (error) {
-                console.log(timeStamp(), '(modules/db.js:'+ __line +')', error);
+                console.log(timeStamp(), 'at',__func,__file+':'+__line, error);
                 return;
             }
         });
@@ -228,7 +244,7 @@ module.exports =
         clanUpdate: function () {
             Clan.find({}, function (err, clans) {
                 if (err){
-                    console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+                    console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
                     return;
                 }
                 console.log(timeStamp() + " updating " + clans.length + " clans...");
@@ -250,7 +266,7 @@ module.exports =
             //db.ranks.find({type:{$not:{$eq:"global"}}},{type:1})
             Rank.find({type:{$not:{$eq:"global"}}}, { type: 1, location: 1 }, function (err, ranks) {
                 if (err){
-                    console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+                    console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
                     return;
                 }
                 console.log(timeStamp() + " updating " + ranks.length + " ranks...");
@@ -262,7 +278,7 @@ module.exports =
         playerUpdate: function () {
             Player.find({}, function (err, players) {
                 if (err){
-                    console.log(timeStamp(), '(modules/db.js:'+ __line +')', err);
+                    console.log(timeStamp(), 'at',__func,__file+':'+__line, err);
                     return;
                 }
                 console.log(timeStamp() + " updating " + players.length + " players...");
