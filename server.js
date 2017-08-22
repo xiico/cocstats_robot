@@ -10,12 +10,15 @@ var everyHour = schedule.scheduleJob('0 */1 * * *', function () {
     db.globalRankUpdate()
 });
 
-var everySixHour = schedule.scheduleJob('0 */6 * * *', function () {
+var everySixHour = schedule.scheduleJob('1 */6 * * *', function () {
     db.clanUpdate();
 });
 
-var everyDay = schedule.scheduleJob('0 0 * * *', function () {
+var everyDay1 = schedule.scheduleJob('2 0 * * *', function () {
     db.playerUpdate();
+});
+
+var everyDay2 = schedule.scheduleJob('3 0 * * *', function () {    
     db.countryRankUpdate();
 });
 
