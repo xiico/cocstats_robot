@@ -239,6 +239,13 @@ function timeStamp() {
     return "[" + new Date().toISOString() + "]";
 }
 
+function iterate(type, options, callBack, rank, timeout){
+    setTimeout(function() {
+        //console.log(db.timeStamp() ,clan.tag, method);        
+        cocRequest.searchClans(type, options, callBack, rank);
+    }, timeout);        
+}
+
 module.exports =
     {
         clanUpdate: function () {
@@ -254,9 +261,10 @@ module.exports =
                         if(clan.remove) clan.remove();
                         continue;
                     }
-                    setTimeout(function() {
-                        cocRequest.searchClans('clan', clan.tag, saveClan);
-                    }, timeout+=50);                    
+                    // setTimeout(function() {
+                    //     cocRequest.searchClans('clan', clan.tag, saveClan);
+                    // }, timeout+=50);       
+                    iterate('clan', clan.tag, saveClan, null, timeout+=50);                      
                 }
             });
         },
@@ -275,9 +283,10 @@ module.exports =
                 console.log(timeStamp() + " updating " + ranks.length + " ranks...");
                 var timeout = 0;
                 for (var index = 0, rank; rank = ranks[index]; index++) {
-                    setTimeout(function() {
-                        cocRequest.searchClans('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location });    
-                    }, timeout+=50);                    
+                    // setTimeout(function() {
+                    //     cocRequest.searchClans('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location });    
+                    // }, timeout+=50);                
+                    iterate('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location }, timeout+=50);        
                 }                
             });
         },
@@ -290,9 +299,10 @@ module.exports =
                 console.log(timeStamp() + " updating " + players.length + " players...");
                 var timeout = 0;
                 for (var index = 0, player; player = players[index]; index++) {
-                    setTimeout(function(){
-                        cocRequest.searchClans('player', player.tag, savePlayer);
-                      }, timeout+=50);                    
+                    // setTimeout(function(){
+                    //     cocRequest.searchClans('player', player.tag, savePlayer);
+                    //   }, timeout+=50);         
+                    iterate('player', player.tag, savePlayer, null, timeout+=50);               
                 }
             });
         },
