@@ -248,12 +248,15 @@ module.exports =
                     return;
                 }
                 console.log(timeStamp() + " updating " + clans.length + " clans...");
+                var timeout = 0;
                 for (var index = 0, clan; clan = clans[index]; index++) {
                     if (!clan.tag){
                         if(clan.remove) clan.remove();
                         continue;
                     }
-                    cocRequest.searchClans('clan', clan.tag, saveClan);
+                    setTimeout(function() {
+                        cocRequest.searchClans('clan', clan.tag, saveClan);
+                    }, timeout+=50);                    
                 }
             });
         },
@@ -270,8 +273,11 @@ module.exports =
                     return;
                 }
                 console.log(timeStamp() + " updating " + ranks.length + " ranks...");
+                var timeout = 0;
                 for (var index = 0, rank; rank = ranks[index]; index++) {
-                    cocRequest.searchClans('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location });
+                    setTimeout(function() {
+                        cocRequest.searchClans('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location });    
+                    }, timeout+=50);                    
                 }                
             });
         },
@@ -282,8 +288,11 @@ module.exports =
                     return;
                 }
                 console.log(timeStamp() + " updating " + players.length + " players...");
+                var timeout = 0;
                 for (var index = 0, player; player = players[index]; index++) {
-                    cocRequest.searchClans('player', player.tag, savePlayer);
+                    setTimeout(function(){
+                        cocRequest.searchClans('player', player.tag, savePlayer);
+                      }, timeout+=50);                    
                 }
             });
         },
