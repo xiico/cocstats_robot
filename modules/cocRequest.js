@@ -1,12 +1,14 @@
 var https = require('https');
 var mock = require('../modules/mock');
 
+var minClanPoints = [54000];
+
 module.exports = {
     searchClans: function (type, options, callBack, rank) {
         if (type == "clan")
             path = '/v1/clans/%23' + options.replace("#", "");
         else if (type == "global")
-            path = '/v1/clans?minClanPoints=' + options;
+            path = '/v1/clans?minClanPoints=' + minClanPoints;
         else if (type == "player")
             path = '/v1/players/%23' + options.replace("#", "");
         else
@@ -34,6 +36,9 @@ module.exports = {
                     console.error('Unable to parse response as JSON', err);
                     return callBack(err);
                 }
+
+                if(parsed.items && parsed.items.length==0) minClanPoints[0]-=1000;
+                if(parsed.items && parsed.items.length>200) minClanPoints[0]+=1000;
 
                 if (parsed.tag || parsed.items)
                     callBack(null, parsed, rank);
