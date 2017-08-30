@@ -45,7 +45,7 @@ module.exports = {
                 if (parsed.tag || parsed.items)
                     callBack(null, parsed, rank);
                 else {
-                    console.log('path:' + path, 'body: ' + body);
+                    console.log('path:' + path, '\nbody: ' + body);
                     if (parsed.reason == "accessDenied.invalidIp") {
                         switch (type) {
                             case "global":
