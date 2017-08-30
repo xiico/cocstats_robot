@@ -14,7 +14,7 @@ module.exports = {
         else
             path = '/v1/locations/' + options +'/rankings/clans?limit=50';
 
-        console.log(path);
+        //console.log(path);
 
         https.get({
             host: 'api.clashofclans.com',
