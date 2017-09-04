@@ -40,7 +40,9 @@ var clanSchema = mongoose.Schema({
                 }
             },
             donations: Number,
-            donationsReceived: Number
+            donationsReceived: Number,
+            clanRank: Number,
+            versusTrophies: Number
         }
     ],
     active: Boolean
