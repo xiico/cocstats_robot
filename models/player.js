@@ -27,7 +27,8 @@ var playerSchema = mongoose.Schema({
     },
     expLevel: Number,
     attackWins: Number,
-    defenseWins: Number
+    defenseWins: Number,
+    versusTrophies: Number
 });
 
 // create the model for users and expose it to our app
