@@ -39,8 +39,8 @@ module.exports = {
                     return callBack(err);
                 }
 
-                if(parsed.items && parsed.items.length==0) minClanPoints[0]-=1000;
-                if(parsed.items && parsed.items.length>200) minClanPoints[0]+=1000;
+                if (parsed.items && parsed.items.length < 50) minClanPoints[0] -= 1000;
+                if (parsed.items && parsed.items.length > 200) minClanPoints[0] += 1000;
 
                 if (parsed.tag || parsed.items)
                     callBack(null, parsed, rank);
