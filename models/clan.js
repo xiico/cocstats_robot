@@ -47,7 +47,9 @@ var clanSchema = mongoose.Schema({
         }
     ],
     active: Boolean
-});
+}, {
+    usePushEach: true
+  });
 
 // create the model for clans and expose it to our app
 module.exports = mongoose.model('Clan', clanSchema);

@@ -14,7 +14,9 @@ var clanHistorySchema = mongoose.Schema({
         members: Number,
         date: Date
     }]
-});
+}, {
+    usePushEach: true
+  });
 
 // create the model for clanHistory and expose it to our app
 module.exports = mongoose.model('clanHistory', clanHistorySchema);

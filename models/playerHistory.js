@@ -31,7 +31,9 @@ var playerHistorySchema = mongoose.Schema({
         "versusBattleWinCount": Number,
         "date": Date
     }]
-});
+}, {
+    usePushEach: true
+  });
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('playerHistory', playerHistorySchema);

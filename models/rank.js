@@ -31,7 +31,9 @@ var RankSchema = mongoose.Schema({
                 previousRank: Number
             }]
         }]
-});
+}, {
+    usePushEach: true
+  });
 
 // create the model for rankEntry and expose it to our app
 module.exports = mongoose.model('Rank', RankSchema);

@@ -29,7 +29,9 @@ var playerSchema = mongoose.Schema({
     attackWins: Number,
     defenseWins: Number,
     versusTrophies: Number
-});
+}, {
+    usePushEach: true
+  });
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Player', playerSchema);
