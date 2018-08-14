@@ -41,7 +41,7 @@ var cocRequest = require('../modules/cocRequest');
 var Rank = require('../models/rank');
 
 // configuration ===============================================================
-mongoose.connect(configDB.url); // connect to our database
+mongoose.connect(configDB.url, { useNewUrlParser: true }); // connect to our database
 
 // function debug(){
 // console.log('at',__func,__file+':'+__line);
