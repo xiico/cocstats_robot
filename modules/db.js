@@ -73,7 +73,8 @@ function saveClan(error, obj) {
                 if (ch) {
                     if (!ch.history)
                         ch.history = [];
-                    ch.history.push({
+                    //ch.history.push({
+                    ch.history.concat([{
                         clanLevel: clan.clanLevel,
                         warWins: clan.warWins,
                         warWinStreak: clan.warWinStreak,
@@ -81,7 +82,7 @@ function saveClan(error, obj) {
                         trophies: clan.trophies,
                         members: clan.members,
                         date: new Date()
-                    });
+                    }]);
                     ch.save(function (error) {
                         if (error){
                             console.log(timeStamp(), 'at',__func,__file+':'+__line,"\n" +  error);
@@ -136,7 +137,8 @@ function savePlayer(error, obj) {
                 if (ph) {
                     if (!ph.history)
                         ph.history = [];
-                    ph.history.push({
+                    //ph.history.push({
+                    ph.history.concat([{
                         "trophies": obj.trophies,
                         "townHallLevel": obj.townHallLevel,
                         "expLevel": obj.expLevel,
@@ -162,7 +164,7 @@ function savePlayer(error, obj) {
                         } : null,
                         "versusBattleWinCount": obj.versusBattleWinCount,
                         "date": new Date()
-                    });
+                    }]);
                     ph.save(function (error) {
                         if (error){
                             console.log(timeStamp(), 'at',__func,__file+':'+__line, "\n" + error);
@@ -195,7 +197,8 @@ function saveRank(error, response, rnk) {
             items: response.items
         }
 
-        rank.entries.push(rankEntry);
+        //rank.entries.push(rankEntry);
+        rank.entries.concat([rankEntry]);
 
         rank.save(function (error) {
             if (error){
@@ -224,7 +227,8 @@ function saveCountryRank(error, response, rnk) {
             items: response.items
         }
 
-        rank.entries.push(rankEntry);
+        //rank.entries.push(rankEntry);
+        rank.entries.concat([rankEntry]);
 
         rank.save(function (error) {
             if (error) {
