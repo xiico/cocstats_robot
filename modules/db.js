@@ -301,8 +301,11 @@ module.exports =
                 for (var index = 0, player; player = players[index]; index++) {
                     // setTimeout(function(){
                     //     cocRequest.searchClans('player', player.tag, savePlayer);
-                    //   }, timeout+=50);         
-                    iterate('player', player.tag, savePlayer, null, timeout+=50);               
+                    //   }, timeout+=50);  
+                    if (player.tag)
+                        iterate('player', player.tag, savePlayer, null, timeout+=50);
+                    else
+                        console.log(timeStamp(), 'problem with player index: ' + index + 'player: ' + player);
                 }
             });
         },
