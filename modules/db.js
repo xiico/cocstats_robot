@@ -264,7 +264,7 @@ module.exports =
                     // setTimeout(function() {
                     //     cocRequest.searchClans('clan', clan.tag, saveClan);
                     // }, timeout+=50);       
-                    iterate('clan', clan.tag, saveClan, null, timeout+=50);                      
+                    iterate('clan', clan.tag, saveClan, null, timeout+=100);                      
                 }
             });
         },
@@ -286,7 +286,7 @@ module.exports =
                     // setTimeout(function() {
                     //     cocRequest.searchClans('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location });    
                     // }, timeout+=50);                
-                    iterate('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location }, timeout+=50);        
+                    iterate('country', rank.location, saveCountryRank, { type: "country", date: new Date(), location: rank.location }, timeout+=100);        
                 }                
             });
         },
@@ -303,7 +303,7 @@ module.exports =
                     //     cocRequest.searchClans('player', player.tag, savePlayer);
                     //   }, timeout+=50);  
                     if (player.tag)
-                        iterate('player', player.tag, savePlayer, null, timeout+=50);
+                        iterate('player', player.tag, savePlayer, null, timeout+=75);
                     else
                         console.log(timeStamp(), 'problem with player index: ' + index + 'player: ' + player);
                 }
