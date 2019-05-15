@@ -82,6 +82,8 @@ function saveClan(error, obj) {
                         members: clan.members,
                         date: new Date()
                     });
+                    if (ch.history.length > 224 ) ch.history.shift();
+                    if (ch.history.length > 224 ) ch.history.shift();
                     ch.save(function (error) {
                         if (error){
                             console.log(timeStamp(), 'at',__func,__file+':'+__line,"\n" +  error);
