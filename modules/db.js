@@ -266,7 +266,7 @@ module.exports =
                     // setTimeout(function() {
                     //     cocRequest.searchClans('clan', clan.tag, saveClan);
                     // }, timeout+=50);       
-                    iterate('clan', clan.tag, saveClan, null, timeout+=100);                      
+                    iterate('clan', clan.tag, saveClan, null, timeout+=120);                      
                 }
             });
         },

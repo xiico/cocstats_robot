@@ -35,6 +35,8 @@ module.exports = {
                 try {
                     var parsed = JSON.parse(body);
                 } catch (err) {
+                    if(body && body.length < 128) console.log(`path: ${path}, body: ${body}`);
+                    else console.log(`path: ${path}, body length: ${body.length}`);
                     console.error('Unable to parse response as JSON', err);
                     return callBack(err);
                 }
